@@ -17,6 +17,7 @@ use InvalidArgumentException;
  * @method \Illuminate\Routing\Route options(string $uri, \Closure|array|string|null $action = null)
  * @method \Illuminate\Routing\Route any(string $uri, \Closure|array|string|null $action = null)
  * @method \Illuminate\Routing\RouteRegistrar as(string $value)
+ * @method \Illuminate\Routing\RouteRegistrar controller(string $controller)
  * @method \Illuminate\Routing\RouteRegistrar domain(string $value)
  * @method \Illuminate\Routing\RouteRegistrar middleware(array|string|null $middleware)
  * @method \Illuminate\Routing\RouteRegistrar name(string $value)
@@ -28,6 +29,8 @@ use InvalidArgumentException;
  */
 class RouteRegistrar
 {
+    use CreatesRegularExpressionRouteConstraints;
+
     /**
      * The router instance.
      *
@@ -58,6 +61,7 @@ class RouteRegistrar
      */
     protected $allowedAttributes = [
         'as',
+        'controller',
         'domain',
         'middleware',
         'name',
