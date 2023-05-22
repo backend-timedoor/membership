@@ -25,7 +25,6 @@ class TmdMembershipProvider extends ServiceProvider
     public function boot()
     {
         Builder::mixin(new AuthAttemptMacro);
-        
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/config/tmd-membership.php' => config_path('tmd-membership.php'),
@@ -33,7 +32,7 @@ class TmdMembershipProvider extends ServiceProvider
                 __DIR__ . '/database/migrations/2021_10_06_000002_create_otps_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_otps_table.php'),
                 __DIR__ . '/database/migrations/2021_10_06_000003_create_notifications_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_notifications_table.php'),
             ], 'tmd-membership');
-        }          
+        } 
 
         $this->app['router']->pushMiddlewareToGroup('api', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
 
