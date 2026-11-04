@@ -8,11 +8,11 @@
             "email": "edwin@timedoor.net"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "laravel/sanctum": "^3.0",
-        "laravelcollective/html": "^6.2",
-        "laravel-notification-channels/fcm": "^3.2"
+        "php": "^8.3",
+        "laravel/framework": "^12.0|^13.0",
+        "laravel/sanctum": "^4.3",
+        "laravel-notification-channels/fcm": "^6.2"
     },
     "autoload": {
         "psr-4": {
