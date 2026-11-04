@@ -1,5 +1,14 @@
 # Membership
 
+## Support matrix
+
+| Laravel | PHP |
+| --- | --- |
+| 12.x | 8.3–8.5 |
+| 13.x | 8.3–8.5 |
+
+This release targets Laravel 12 and 13. It requires PHP 8.3 or newer.
+
 ## Instalation 
 ### Install Package Via Composer
 ```
@@ -45,19 +54,40 @@ Reload autoload
 composer dump-autoload
 ```
 
-Add route to `RouteServiceProvider`
-```php
-Route::prefix('api')
-        ->middleware('api')
-        ->namespace($this->namespace)
-        ->group(base_path('routes/membership.php'));
+### Register routes (Laravel 12+)
 
-    Route::middleware('web')
-        ->prefix('admin')
-        ->as('admin.')
-        ->namespace($this->namespace)
-        ->group(base_path('routes/admin.php'));
+Laravel 12+ does not use `RouteServiceProvider` by default. Add the package routes in `bootstrap/app.php` using the `then` callback:
+
+```php
+use Illuminate\Support\Facades\Route;
+
+return Application::configure(basePath: dirname(__DIR__))
+    // ...
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+        then: function () {
+            function () {
+            Route::middleware('api')
+                ->prefix('api/v1')
+                ->group(base_path('routes/membership.php'));
+
+            Route::middleware('web')
+                ->prefix('admin')
+                ->name('admin.')
+                ->group(base_path('routes/admin.php'));
+        },
+    )
+    // ...
+    ->create();
 ```
+
+The package route files already define the `/api` and `/admin` prefixes. Do not add those prefixes again.
+
+> Laravel 11 and earlier: register the same route groups in `app/Providers/RouteServiceProvider.php`.
+
 Add Fcm trait to your user models
 ```php
 Timedoor\TmdMembership\traits\Fcmable;
