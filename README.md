@@ -7,7 +7,7 @@
 | 12.x | 8.3–8.5 |
 | 13.x | 8.3–8.5 |
 
-This release targets Laravel 12 and 13. It requires PHP 8.3 or newer.
+This release (version 2.0.0 and above) targets Laravel 12 and 13. It requires PHP 8.3 or newer. For Laravel 10 and below, refer to version 1.x.x.
 
 ## Instalation 
 ### Install Package Via Composer
@@ -69,7 +69,6 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function () {
-            function () {
             Route::middleware('api')
                 ->prefix('api/v1')
                 ->group(base_path('routes/membership.php'));
